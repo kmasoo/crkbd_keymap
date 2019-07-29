@@ -32,10 +32,11 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   ADJUST,
-  //mark codes
-  DM_BRCT,//()+LEFT
-  DM_BRCTL,//[]+LEFT
-  DM_BRCTM,//{}+LEFT
+  DM_BRCT,   //()+LEFT
+  DM_BRCTL,  //[]+LEFT
+  DM_BRCTM,  //{}+LEFT
+  DM_SQUOT,  //''+LEFT
+  DM_DQUOT,  //""+LEFT
   NUMPAD,
   BACKLIT,
   RGBRST
@@ -50,11 +51,13 @@ enum macro_keycodes {
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
 #define KC_NUMPAD NUMPAD
+#define KC_ADJST ADJUST
 
-//mark
-#define KC_DBRCT DM_BRCT
+#define KC_DBRCT  DM_BRCT
 #define KC_DBRCTL DM_BRCTL
 #define KC_DBRCTM DM_BRCTM
+#define KC_DSQUOT DM_SQUOT
+#define KC_DDQUOT DM_DQUOT
 
 #define KC_RST   RESET
 #define KC_LRST  RGBRST
@@ -66,11 +69,6 @@ enum macro_keycodes {
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
 #define KC_LMOD  RGB_MOD
-
-//#define KC_GUIEI GUI_T(KC_LANG2)
-//#define KC_ALTKN ALT_T(KC_LANG1)
-
-#define KC_ADJST ADJUST
 
 #define KC_RSSPC LT(_RAISE,KC_SPC)
 #define KC_LWSPC LT(_LOWER,KC_SPC)
@@ -97,46 +95,33 @@ enum macro_keycodes {
 #define KC_A_SL     ALT_T(KC_SLSH)
 #define KC_A_DEL    ALT_T(KC_DEL)
 #define KC_A_INS    ALT_T(KC_INS)
+#define KC_A_ENT    ALT_T(KC_ENT)
 #define KC_A_NUM    ALT_T(KC_NUMPAD)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
-  //,-----------------------------------------.                ,-----------------------------------------.
-  //    ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,   DEL,
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-  //  CTLTB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,     ;,     ',
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-  //   LSFT,     Z,     X,     C,     V,     B,                      N,     M,     ,,     .,     /, SFMNS,
-  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-  //                              ALINS,   SPC, LOWER,    RAISE,   ENT,  RALT
-                              //`--------------------'  `--------------------'
         ESC,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,   DEL,\
       C_TAB,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH, S_MNS,\
-	                         A_INS,LOWER , C_SPC,    C_SPC,  RAISE,  A_DEL
+	                         A_INS,LOWER , C_SPC,    C_SPC,  RAISE,  A_ENT
   ),
 
   [_LOWER] = LAYOUT_kc(	\
-  //,-----------------------------------------.                ,-----------------------------------------.
-  //    ESC,     !,     @,     #,     $,     (,                      ),     %,     ^,     &,     *,  BSPC,
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+  //    ESC,     !,     @,     #,     $,     %,                      ^,     &,     *,     (,     ),  BSPC,
   //  CTLTB,     `,     -,     =,     \,     [,                      ],     ',     ,,     .,     /,     ;,
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
   //   LSFT,     ~,     _,     +,     |,     {,                      },     ",     <,     >,     ?, SFCLN,
-  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
   //                              ALINS,   SPC, LOWER,    RAISE,   ENT,  RALT
-                              //`--------------------'  `--------------------'
-        ESC,  EXLM,    AT,  HASH,   DLR,  LPRN,                   RPRN,  PERC,  CIRC,  AMPR,  ASTR,  BSPC,\
+        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  ASTR,  LPRN,  RPRN,  BSPC,\
       C_TAB,   GRV,  MINS,   EQL,  BSLS,  LBRC,                   RBRC,  QUOT,  COMM,   DOT,  SLSH,  SCLN,\
        LSFT,  TILD,  UNDS,  PLUS,  PIPE,  LCBR,                   RCBR,  DQUO,  LABK,  RABK,  QUES, S_CLN,\
-                                  _____ , LOWER , C_SPC,    C_SPC,  RAISE,  _____
+                                  _____ , LOWER , _____,    _____,  RAISE,  _____
   ),
   
   [_RAISE] = LAYOUT_kc( \
         ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,  BSPC,\
-      C_TAB,     4,     5,     6,     0, XXXXX,                   LEFT,  DOWN,    UP, RIGHT,  HOME,   END,\
-	LSFT,     7,     8,     9,  COMM,   DOT,                   DBRCT, DBRCTL, DBRCTM, XXXXX , PGDN,  PGUP, \
-                                   _____, LOWER , C_SPC,    C_SPC,  RAISE,  _____
+      C_TAB, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT, XXXXX, XXXXX,\
+       LSFT, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  DBRCT,DBRCTL,DBRCTM,DSQUOT,DDQUOT, XXXXX,\
+                                   _____, LOWER , _____,    _____,  RAISE,  _____
 
  ),
   
@@ -148,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                 _____, LOWER , C_SPC,    C_SPC,  RAISE,  _____
+                                 _____, LOWER , _____,    _____,  RAISE,  _____
                               //`--------------------'  `--------------------'
  ),
 
@@ -156,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXX,    F1,    F2,    F3,    F4,    F5,                  XXXXX, 7,     8,     9,   EQL,  XXXXX, \
       XXXXX,    F6,    F7,    F8,    F9,   F10,                   COMM, 4,     5,     6,  ASTR,   SLSH, \
       XXXXX,   F11,   F12, XXXXX, XXXXX, XXXXX,                    DOT, 1,     2,     3,  PLUS,   MINS, \
-                                  _____, LOWER, C_SPC,    C_SPC,  RAISE,      0
+                                  _____, LOWER, _____,    _____,  RAISE,      0
  ),
 
 };
@@ -243,7 +228,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   uint16_t prev_keycode = stored_keycode;
 
   is_tapped = ( (!record->event.pressed) && (keycode == prev_keycode ));
-  //is_hold   = (record->event.time > TAPPING_TERM);
   stored_keycode = keycode;
 
   if (record->event.pressed) {
@@ -258,8 +242,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         persistent_default_layer_set(1UL<<_QWERTY);
       }
-
       return false;
+
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -275,6 +259,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
       return false;
+
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
@@ -290,51 +275,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
       return false;
+
     case ADJUST:
-        if (record->event.pressed) {
-          layer_on(_ADJUST);
-        } else {
-          layer_off(_ADJUST);
-        }
-        return false;
-    case NUMPAD:
-        /* if (record->event.pressed) { */
-        /*   layer_on(_NUMPAD); */
-        /* } else { */
-        /*   layer_off(_NUMPAD); */
-        /* } */
-      /* if (record->event.pressed) { */
-      /* 	register_code(KC_LALT); */
-      /* }else{ */
-      /* 	unregister_code(KC_LALT); */
-        is_toggled = !is_toggled;
-        /* if( is_tapped ){ */
-          if( is_toggled ){
-            layer_on(_NUMPAD);
-          } else {
-            layer_off(_NUMPAD);
-          }
-      	/* } */
-      /* } */
+      if (record->event.pressed) {
+        layer_on(_ADJUST);
+      } else {
+        layer_off(_ADJUST);
+      }
       return false;
+
+    case NUMPAD:
+      is_toggled = !is_toggled;
+      if( is_toggled ){
+        layer_on(_NUMPAD);
+      } else {
+        layer_off(_NUMPAD);
+      }
+      return false;
+
     case DM_BRCT:
       if (record->event.pressed) {
-        // when keycode DM_BRCT is pressed
         SEND_STRING("()"SS_TAP(X_LEFT));
       }
       return false;
 
     case DM_BRCTL:
       if (record->event.pressed) {
-        // when keycode DM_BRCTL is pressed
         SEND_STRING("[]"SS_TAP(X_LEFT));
       }
       return false;
 
     case DM_BRCTM:
       if (record->event.pressed) {
-        // when keycode DM_BRCTM is pressed
         SEND_STRING("{}"SS_TAP(X_LEFT));
+      }
+      return false;
+
+    case DM_SQUOT:
+      if (record->event.pressed) {
+        SEND_STRING("\'\'"SS_TAP(X_LEFT));
+      }
+      return false;
+
+    case DM_DQUOT:
+      if (record->event.pressed) {
+        SEND_STRING("\"\""SS_TAP(X_LEFT));
       }
       return false;
 
@@ -347,6 +332,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       #endif
       return false;
+
     case RGBRST:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
